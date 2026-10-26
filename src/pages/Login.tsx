@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Globe, Loader2 } from 'lucide-react';
+import { Globe, Loader2, Moon, Sun } from 'lucide-react';
 import { login, isAuthenticated } from '../auth/auth';
 import { validateEmail, validateRequired } from '../validation';
 import { FormField, inputClassName } from '../components/FormField';
+import { useTheme } from '../contexts/ThemeContext';
 
 export function Login(): React.ReactElement {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   // MOCK: prefilled with the demo admin login — remove before wiring a real backend.
   const [email, setEmail] = useState('admin@example.com');
@@ -48,7 +50,16 @@ export function Login(): React.ReactElement {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-primary px-4">
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-primary px-4">
+      <button
+        type="button"
+        onClick={toggleTheme}
+        className="absolute top-4 right-4 rounded-card p-2 text-white/90 hover:bg-white/10 transition-colors"
+        aria-label="Toggle theme"
+      >
+        {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      </button>
+
       <div className="w-full max-w-md rounded-card bg-surface dark:bg-surface-dark p-8 shadow-card-lg">
         <div className="flex items-center gap-2 mb-8">
           <div className="h-9 w-9 rounded-card bg-gradient-primary" />

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { MailCheck } from 'lucide-react';
+import { MailCheck, Moon, Sun } from 'lucide-react';
 import { validateEmail } from '../validation';
 import { FormField, inputClassName } from '../components/FormField';
+import { useTheme } from '../contexts/ThemeContext';
 
 export function ForgotPassword(): React.ReactElement {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
   const [email, setEmail] = useState('');
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -24,7 +26,16 @@ export function ForgotPassword(): React.ReactElement {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-primary px-4">
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-primary px-4">
+      <button
+        type="button"
+        onClick={toggleTheme}
+        className="absolute top-4 right-4 rounded-card p-2 text-white/90 hover:bg-white/10 transition-colors"
+        aria-label="Toggle theme"
+      >
+        {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      </button>
+
       <div className="w-full max-w-md rounded-card bg-surface dark:bg-surface-dark p-8 shadow-card-lg">
         <h1 className="text-xl font-semibold">Reset your password</h1>
         <p className="mt-1 text-sm text-muted">
